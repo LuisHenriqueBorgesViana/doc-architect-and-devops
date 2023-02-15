@@ -1,0 +1,42 @@
+sudo docker network create gateway-api-network
+
+sudo docker run -d --name kong-database --network=gateway-api-network \
+   -e "POSTGRES_USER=kong" -e "POSTGRES_DB=kong" -e "POSTGRES_PASSWORD=kong" \
+   -p 5432:5432 postgres:9.6
+ 
+sudo docker run --rm --network=gateway-api-network \
+  -e "KONG_DATABASE=postgres" -e "KONG_PG_HOST=kong-database" \
+  -e "KONG_PG_PASSWORD=kong" kong:latest kong migrations bootstrap
+
+sudo docker run -d --name kong --network=gateway-api-network \
+   -e "KONG_DATABASE=postgres" -e "KONG_PG_HOST=kong-database" \
+   -e "KONG_PG_PASSWORD=kong" -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
+   -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
+   -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \
+   -p 8000:8000 -p 8443:8443 -p 8001:8001 -p 8444:8444 kong:latest
+
+sudo docker run --rm --network=gateway-api-network  \
+   pantsel/konga -c prepare -a postgres -u postgresql://kong:kong@kong-database:5432/konga_db
+
+sudo docker run -p 1337:1337 \
+   --network=gateway-api-network \
+   -e "DB_ADAPTER=postgres" \
+   -e "DB_HOST=kong-database" \
+   -e "DB_USER=kong" \
+   -e "DB_PASSWORD=kong" \
+   -e "DB_DATABASE=konga_db" \
+   -e "KONGA_HOOK_TIMEOUT=120000" \
+   -e "NODE_ENV=production" \
+   --name konga \
+   pantsel/konga
+
+
+docker run -d --name kong-database --network=gateway-api-network -e "POSTGRES_USER=kong" -e "POSTGRES_DB=kong" -e "POSTGRES_PASSWORD=kong" -p 5432:5432 postgres:9.6
+
+docker run --rm --network=gateway-api-network -e "KONG_DATABASE=postgres" -e "KONG_PG_HOST=kong-database" -e "KONG_PG_PASSWORD=kong" kong:latest kong migrations bootstrap
+
+docker run -d --name kong --network=gateway-api-network -e "KONG_DATABASE=postgres" -e "KONG_PG_HOST=kong-database" -e "KONG_PG_PASSWORD=kong" -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" -e "KONG_PROXY_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" -p 8000:8000 -p 8443:8443 -p 8001:8001 -p 8444:8444 kong:latest
+
+docker run --rm --network=gateway-api-network pantsel/konga -c prepare -a postgres -u postgresql://kong:kong@kong-database:5432/konga_db
+
+docker run -p 1337:8002 --network=gateway-api-network -e "DB_ADAPTER=postgres" -e "DB_HOST=kong-database" -e "DB_USER=kong" -e "DB_PASSWORD=kong" -e "DB_DATABASE=konga_db" -e "KONGA_HOOK_TIMEOUT=120000" -e "NODE_ENV=production" --name konga pantsel/konga
