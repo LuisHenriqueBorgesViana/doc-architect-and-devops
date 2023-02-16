@@ -15,11 +15,10 @@ sudo systemctl start mongod
 sudo systemctl enable mongod
 
 nano /etc/mongod.conf
-* Edit the file /etc/mongod.conf:
+
 security:
   authorization: enabled
 
-# network interfaces
 net:
   port: 27017
   bindIp: 0.0.0.0
@@ -28,13 +27,11 @@ sudo systemctl restart mongod
 
 mongosh
 
-use admin
-
 db.createUser(
   {
     user: 'admin',
     pwd: 'mongodb',
-    roles: [ { role: 'root', db: 'admin' } ]
+    roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"]
   }
 );
 

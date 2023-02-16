@@ -8,7 +8,7 @@ sudo snap install docker
 
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
-docker --version
+sudo docker --version
 
 sudo docker ps -a
 
@@ -16,8 +16,6 @@ sudo systemctl status docker
 
 sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-sudo chmod +x /usr/local/bin/docker-compose
-
-docker-compose --version
+sudo docker-compose --version
 
 sudo systemctl status docker

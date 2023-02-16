@@ -6,4 +6,10 @@ sudo apt install pgadmin4
 
 sudo /usr/pgadmin4/bin/setup-web.sh
 
-http://SERVER_IP/pgadmin4
+http://127.0.0.1/pgadmin4
+
+sudo systemctl restart apache2
+
+sudo systemctl status apache2
+
+sudo curl --verbose http://127.0.0.1/pgadmin4

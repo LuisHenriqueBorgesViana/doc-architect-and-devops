@@ -9,15 +9,12 @@ apt install postgresql postgresql-contrib
 service postgresql status
 
 sudo -u postgres psql
-
 ALTER USER postgres PASSWORD 'postgres';
 
 nano /etc/postgresql/15/main/postgresql.conf
-* Ajust in File: 
 listen_addresses = '*'
 
 nano /etc/postgresql/15/main/pg_hba.conf
-* Add in File: 
 host all all 127.0.0.1/32 trust
 host all all 0.0.0.0/0 trust
 
@@ -30,3 +27,5 @@ mkdir /database/name_tablespace
 chmod 777 /database/
 
 chown postgres:postgres /database/
+
+systemctl status postgresql
