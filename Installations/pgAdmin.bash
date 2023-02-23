@@ -13,3 +13,5 @@ sudo systemctl restart apache2
 sudo systemctl status apache2
 
 sudo curl --verbose http://127.0.0.1/pgadmin4
+
+sudo docker run -ti --rm ubuntu /bin/bash

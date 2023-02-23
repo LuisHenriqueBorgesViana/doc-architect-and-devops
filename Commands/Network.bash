@@ -40,8 +40,9 @@ reboot
 # Ping a specific port with the tool or ping ICMP:
 
 sudo apt-get install nmap
-sudo nping --tcp -p 80 10.0.0.1
-sudo nping --tcp -p 10.0.0.1
+sudo nping --tcp -p 80 127.0.0.1
+sudo nping --tcp 127.0.0.1
+sudo nping -f 127.0.0.1
 
 ----------------------------------------------------------------------------------------------------------------------
 # Monitor Network Traffic In Detail:

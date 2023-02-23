@@ -26,7 +26,7 @@ sudo docker run --rm \
    --network=gateway-api-network  \
    pantsel/konga -c prepare -a postgres -u postgresql://kong:kong@kong-database:5432/konga_db
 
-sudo docker run -p 1337:1337 \
+sudo docker run -p 9001:1337 \
    --network=gateway-api-network \
    -e "DB_ADAPTER=postgres" \
    -e "DB_HOST=kong-database" \
@@ -38,7 +38,7 @@ sudo docker run -p 1337:1337 \
    --name konga \
    pantsel/konga
 
-curl -s http://127.0.0.1:1337/
+curl -s http://127.0.0.1:9001/
 
 sudo sysctl -w vm.max_map_count=262144;
 
@@ -80,7 +80,7 @@ Elastic Search "http://127.0.0.1:5601/app/discover#/?"
 Kong Gateway API "http://127.0.0.1:8000/"
 Kong Gateway Manager "http://127.0.0.1:8001/"
 
-# Open doors: 8443, 8444, 9200, 1337, 9300, 5601, 5432, 8000 and 8001.
+# Open doors: 8443, 8444, 9200, 1337, 9300, 5601, 5432, 8000, 9001 and 8001.
 sudo watch netstat -tulpn
 
 # Configure Kong through the Conga interface and ELK through Elastic, both of which talk via plugin.
