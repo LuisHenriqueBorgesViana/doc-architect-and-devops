@@ -50,7 +50,7 @@ sudo docker run -d --name elastic \
   -e "discovery.type=single-node" \
   docker.elastic.co/elasticsearch/elasticsearch:7.13.1
 
-curl -s http://127.0.0.1:9200/
+curl -s http://127.0.0.1:9300/
 
 # Set the Server Local IP on the Internal IPv4 Network in "ELASTICSEARCH_HOSTS"
 sudo docker run -d --name kibana \
