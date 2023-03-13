@@ -18,18 +18,19 @@ sudo kill $(sudo lsof -t -i:3000)
 ----------------------------------------------------------------------------------------------------------------------
 # Disable IPv6:
 
-nano /etc/default/grub
+sudo nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="ipv6.disable=1"
 GRUB_CMDLINE_LINUX="ipv6.disable=1"
+
 update-grub
 
 sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1
 sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
-nano /etc/sysctl.conf 
-net.ipv6.conf.all.disable_ipv6=1
-net.ipv6.conf.default.disable_ipv6=1
+sudo nano /etc/sysctl.conf 
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
 net.ipv6.conf.lo.disable_ipv6 = 1
 
 cat /proc/sys/net/ipv6/conf/all/disable_ipv6

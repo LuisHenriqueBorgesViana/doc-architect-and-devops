@@ -12,7 +12,7 @@ sudo ufw disable
 
 sudo ufw allow 22/tcp
 sudo ufw allow from 168.197.159.173
-sudo ufw allow proto tcp from 168.197.159.173 to any port 22
+sudo ufw allow proto tcp from 168.197.159.173 to any port 5432
 sudo ufw allow proto tcp from 168.197.159.173 to 177.106.78.129 port 22
 
 ----------------------------------------------------------------------------------------------------------------------

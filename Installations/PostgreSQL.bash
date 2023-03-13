@@ -4,28 +4,28 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs
 
 sudo apt update
 
-apt install postgresql postgresql-contrib
+sudo apt install postgresql postgresql-contrib
 
-service postgresql status
+sudo service postgresql status
 
 sudo -u postgres psql
 ALTER USER postgres PASSWORD 'postgres';
 
-nano /etc/postgresql/15/main/postgresql.conf
+sudo nano /etc/postgresql/15/main/postgresql.conf
 listen_addresses = '*'
 
-nano /etc/postgresql/15/main/pg_hba.conf
+sudo nano /etc/postgresql/15/main/pg_hba.conf
 host all all 127.0.0.1/32 trust
 host all all 0.0.0.0/0 trust
 
-systemctl restart postgresql
+sudo systemctl restart postgresql
 
 ss -nlt | grep 5432
 
-mkdir /database/name_tablespace
+sudo mkdir /root/database
 
-chmod 777 /database/
+sudo chmod 777 /root/database
 
-chown postgres:postgres /database/
+sudo chown postgres:postgres /root/database
 
-systemctl status postgresql
+sudo systemctl status postgresql
